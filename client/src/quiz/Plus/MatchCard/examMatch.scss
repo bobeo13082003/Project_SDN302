@@ -1,0 +1,40 @@
+.match-card {
+  text-align: center;
+  padding: 20px;
+}
+
+.gridMatch {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cardMatch {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s;
+}
+
+.cardMatch.flipped {
+  background-color: #667666;
+  color: white;
+}
+
+.cardMatch.matched {
+  visibility: hidden;
+}
+.retry-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}

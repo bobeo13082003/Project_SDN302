@@ -1,0 +1,135 @@
+//Libary
+.lib-nav {
+
+  margin-top: 100px;
+}
+.ant-tabs-tab-btn{
+  color:#009ACD;
+}
+//Explanation
+
+
+//FlashCard
+
+.flashcard-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  color: white;
+  min-height: 100vh;
+}
+
+.flashcard-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.earth-day-section {
+  text-align: center;
+}
+
+.wind-turbine-animation {
+  width: 500px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.flashcard-left h2 {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.flashcard-right {
+  flex: 1;
+  padding: 20px;
+  text-align: left;
+}
+
+.flashcard-right h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.flashcard-right p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.add-quiz-container {
+  margin: 20px 0;
+}
+
+.codecolor-animation {
+  margin-top: 20px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .flashcard-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .flashcard-right {
+    padding: 0;
+  }
+
+  .wind-turbine-animation {
+    width: 180px;
+  }
+
+  .flashcard-right h1 {
+    font-size: 2rem;
+  }
+
+  .flashcard-right p {
+    font-size: 0.9rem;
+  }
+}
+
+
+//Card
+.card {}
+
+.line {
+  height: 2px;
+  background-color: #d3d2d2;
+  margin: 10px 0;
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+.collapsed {
+  width: 40%;
+  padding-left: 10px;
+}
+
+.menu-item {
+  text-align: left;
+  padding-left: 16px;
+}
+
+.ant-menu-item {
+  padding: 10px 16px;
+}
+
+
+.ant-menu-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.ant-menu-item a:hover {
+  color: #a8b1ff;
+}
+
+.collapsed-menu .ant-menu-item {
+  padding-left: 10px;
+}
