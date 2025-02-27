@@ -97,7 +97,7 @@ module.exports.addQuiz = async (req, res) => {
     }
 };
 
-// Remove a quiz by ID
+// Remove a quiz by ID and check if the user has permission
 module.exports.removeQuiz = async (req, res) => {
     try {
         const { id } = req.params;
@@ -153,7 +153,7 @@ module.exports.deleteQuiz = async (req, res) => {
     }
 }
 
-// Update quiz and its questions
+// Update quiz and its questions by ID
 module.exports.updateQuiz = async (req, res) => {
     try {
         const { id } = req.params;
@@ -244,7 +244,7 @@ module.exports.updateQuiz = async (req, res) => {
     }
 };
 
-// Remove a question by ID
+// Remove a question by ID check if the question belongs to the quiz
 module.exports.removeQuestion = async (req, res) => {
     try {
         const { id } = req.params;

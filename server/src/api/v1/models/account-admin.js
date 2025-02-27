@@ -1,6 +1,6 @@
 const randomString = require('../../../helper/generateRandom');
 const mongoose = require("mongoose");
-
+//account-admin
 const adminSchema = new mongoose.Schema({
     userName: String,
     password: String,

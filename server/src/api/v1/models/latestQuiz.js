@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+// Define the Question model
 const latestQuiz = new mongoose.Schema({
     userID: String,
     quizIDs: {

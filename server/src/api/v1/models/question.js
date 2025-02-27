@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+// Define the Question model
 const questionSchema = new mongoose.Schema({
     quizId: {
         type: mongoose.Schema.Types.ObjectId,

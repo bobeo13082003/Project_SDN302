@@ -2,7 +2,7 @@ const Quiz = require('../../models/quiz')
 const User = require('../../models/user')
 const LatestQuiz = require('../../models/latestQuiz');
 const paginationHelper = require('../../../../helper/pagination');
-
+//lastest quiz
 module.exports.lastestQuiz = async (req, res) => {
     try {
         const { quizId } = req.body;
@@ -38,6 +38,7 @@ module.exports.lastestQuiz = async (req, res) => {
         res.status(500).json({ message: 'Error retrieving latest quiz' });
     }
 }
+//list lastest quiz
 module.exports.listLastQuiz = async (req, res) => {
     try {
         const authHeader = req.header('Authorization');
