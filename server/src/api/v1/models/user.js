@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const randomString = require('../../../helper/generateRandom')
+// Define the User model
 const userSchema = new mongoose.Schema({
     email: String,
     userName: String,
