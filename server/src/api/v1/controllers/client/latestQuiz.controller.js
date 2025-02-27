@@ -2,7 +2,7 @@ const Quiz = require('../../models/quiz')
 const User = require('../../models/user')
 const LatestQuiz = require('../../models/latestQuiz');
 const paginationHelper = require('../../../../helper/pagination');
-//lastest quiz
+//lastest quizzz
 module.exports.lastestQuiz = async (req, res) => {
     try {
         const { quizId } = req.body;

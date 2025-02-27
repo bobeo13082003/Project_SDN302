@@ -244,7 +244,7 @@ module.exports.updateQuiz = async (req, res) => {
     }
 };
 
-// Remove a question by ID check if the question belongs to the quiz
+// Remove a question by ID check if the question belongs to the quizzz
 module.exports.removeQuestion = async (req, res) => {
     try {
         const { id } = req.params;
