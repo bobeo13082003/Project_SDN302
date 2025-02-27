@@ -10,7 +10,7 @@ import { Question } from "../QuestionModal";
 import { current } from "@reduxjs/toolkit";
 import {useTranslation} from "react-i18next";
 const { Title } = Typography;
-
+import {useNavigation} from "react-router-dom";
 interface FlashCardQuestionProps {
   questions: Question[];
 }
@@ -22,7 +22,7 @@ const FlashCardQuestion: React.FC<FlashCardQuestionProps> = ({ questions }) => {
 const {t} = useTranslation("learnquiz");
   const totalQuestions = questions.length;
   const currentQuestion = questions[currentIndex];
-
+const {navigate} = useNavigation();
   const handleFlip = () => {
     setIsFlipped((prevState) => !prevState);
   };
@@ -59,7 +59,7 @@ const {t} = useTranslation("learnquiz");
           status="active"
           className="progress-bar"
         />
-
+<Button className="btnFlash" onClick={() => navigate.back()}>{t("Back")}</Button>
         <div className="flip-card" onClick={handleFlip}>
           <div className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}>
             <div className="flip-card-front">

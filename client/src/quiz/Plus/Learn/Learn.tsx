@@ -12,6 +12,7 @@ import {
 import "./examLearn.scss";
 import { Question } from "../../QuestionModal";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 const { Title } = Typography;
 
 interface QuizletLearnListProps {
@@ -74,6 +75,7 @@ const QuizletLearnList1: React.FC<QuizletLearnListProps> = ({
   const[currentProgress,setCurrentProgress] = useState(0);
   const[correctAnswersArray,setCorrectAnswersArray] = useState<string[]>([]);
   const[completed,setCompleted] = useState(false);
+  const {navigate} = useNavigate();
   useEffect(() => {
     if (questionType === "both") {
       const types = questions.map(() =>
@@ -320,6 +322,7 @@ const QuizletLearnList1: React.FC<QuizletLearnListProps> = ({
       <Title level={2} style={{ marginBottom: 24 }}>
         {t("Learn")}
       </Title>
+      <Button className="btnFlash" onClick={() => navigate.back()}>{t("Back")}</Button>
       <header style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           <div></div>

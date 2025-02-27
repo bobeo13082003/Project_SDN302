@@ -4,6 +4,7 @@ import { Button } from "antd";
 import { Question } from "../QuestionModal";
 import "./examMatch.scss";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 interface MatchCardProps {
   questions: Question[];
 }
@@ -17,7 +18,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
-
+const {navigate} = useNavigate();
   useEffect(() => {
     // Shuffle and initialize the cards
     const shuffledQuestions = [...originalQuestions]
@@ -85,7 +86,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
   return (
     <div className="match-card">
       <h1>{t("CardMatchingGame")}</h1>
-
+<Button className="btnFlash" onClick={() => navigate.back()}>{t("Back")}</Button>
       <div style={{ fontSize: "20px", fontWeight: "bold", color: "red" }}>
         {t("Time")}: {elapsedTime}s
       </div>

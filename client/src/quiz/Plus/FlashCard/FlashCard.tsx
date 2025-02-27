@@ -9,6 +9,7 @@ import "./examFlashCard1.scss";
 import { Question } from "../../QuestionModal";
 import { current } from "@reduxjs/toolkit";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 const { Title } = Typography;
 
 interface FlashCardQuestionProps {
@@ -22,7 +23,7 @@ const FlashCardQuestion1: React.FC<FlashCardQuestionProps> = ({ questions }) => 
 const { t } = useTranslation("learnquiz");
   const totalQuestions = questions.length;
   const currentQuestion = questions[currentIndex];
-
+const navigate = useNavigate();
   const handleFlip = () => {
     setIsFlipped((prevState) => !prevState);
   };
@@ -53,6 +54,7 @@ const { t } = useTranslation("learnquiz");
   return (
     <>
       <h1>{t("FlashCardReview")}</h1>
+      <Button className="btnFlash" onClick={() => navigate.back()}>{t("Back")}</Button>
       <div className="flash-card-container1">
         <Progress
           percent={((currentProgress / totalQuestions) * 100).toFixed(0)}

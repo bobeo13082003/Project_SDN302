@@ -13,6 +13,7 @@ import "./examQuiz.scss";
 import { useEffect, useMemo } from "react";
 import { Question } from "../../QuestionModal";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 const { Title } = Typography;
 //Kiểu của questioninterface
 interface QuizletLearnListProps {
@@ -67,6 +68,7 @@ const QuizExam1: React.FC<QuizletLearnListProps> = ({
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const {navigate} = useNavigate();
   const [answerMode, setAnswerMode] = useState<
     "select" | "text" | "random" | null
   >(null);
@@ -262,7 +264,7 @@ const matchTypeQuestions = createMatchTypeQuestions(
       <Title level={2} style={{ marginBottom: 24 }}>
         {t("Test")}
       </Title>
-
+<Button className="btnFlash" onClick={() => navigate.back()}>{t("Back")}</Button>
       <Modal
         title={t("ChooseAnswerModeandNumberofQuestions")}
         visible={isModalVisible}

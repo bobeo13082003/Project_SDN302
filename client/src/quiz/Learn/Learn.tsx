@@ -12,6 +12,7 @@ import {
 import "./examLearn.scss";
 import { Question } from "../QuestionModal";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 const { Title } = Typography;
 
 interface QuizletLearnListProps {
@@ -72,6 +73,7 @@ const QuizletLearnList: React.FC<QuizletLearnListProps> = ({
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [questionTypes, setQuestionTypes] = useState<string[]>([]);
  const[currentProgress,setCurrentProgress] = useState(0);
+ const {navigate} = useNavigate();
   useEffect(() => {
     if (questionType === "both") {
       const types = questions.map(() =>
@@ -266,6 +268,7 @@ const QuizletLearnList: React.FC<QuizletLearnListProps> = ({
         <Title level={4} style={{ marginBottom: "16px" }}>
           {t("SelectQuestionType")}
         </Title>
+
         <Radio.Group
           onChange={(e) => handleQuestionTypeSelection(e.target.value)}
           defaultValue="select"
@@ -300,6 +303,7 @@ const QuizletLearnList: React.FC<QuizletLearnListProps> = ({
       <Title level={2} style={{ marginBottom: 24 }}>
         {t("Learn")}
       </Title>
+      <Button className="btnFlash" onClick={() => navigate.back()}>{t("Back")}</Button>
       <header style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           <div></div>
