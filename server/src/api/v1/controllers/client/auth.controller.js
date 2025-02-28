@@ -64,7 +64,7 @@ module.exports.login = async (req, res) => {
                 res.json({
                     code: 200,
                     token: user.token,
-                    id:user.id,
+                    id: user.id,
                     message: "Login Successful."
                 })
             }
@@ -177,23 +177,23 @@ module.exports.profile = async (req, res) => {
     try {
         const authHeader = req.header('Authorization');
         const token = authHeader && authHeader.split(' ')[1];
-        if(token){
+        if (token) {
             const user = await Users.findOne({
-                token:token
+                token: token
             }).select('email userName')
-            if(user){
+            if (user) {
                 res.json({
-                    code:200,
-                    user:user
+                    code: 200,
+                    user: user
                 })
             }
-        }else{
+        } else {
             res.json({
-                code:403,
+                code: 403,
                 message: "Token Found"
             })
         }
-    }catch (error){
+    } catch (error) {
         console.log(error)
     }
 }
@@ -203,16 +203,16 @@ module.exports.editProfile = async (req, res) => {
         const authHeader = req.header('Authorization');
         const token = authHeader && authHeader.split(' ')[1];
         const userName = req.body.userName;
-        if(token){
+        if (token) {
             const user = await Users.updateOne({
-                token:token
-            }, {userName:userName})
-           res.json({
-               code:200,
-               message:"Update Successfull."
-           })
+                token: token
+            }, { userName: userName })
+            res.json({
+                code: 200,
+                message: "Update Successfull."
+            })
         }
-    }catch (error){
+    } catch (error) {
         console.log(error)
     }
 }
