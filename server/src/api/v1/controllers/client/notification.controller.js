@@ -7,20 +7,20 @@ module.exports.getNotification = async (req, res) => {
     const authHeader = req.header('Authorization');
     const token = authHeader && authHeader.split(' ')[1];
 
-    if(token){
+    if (token) {
         const user = await User.findOne({
             token: token,
         })
         const notification = await Notification.find({
-            userId:user._id,
-        }).sort({createdAt:"desc"})
+            userId: user._id,
+        }).sort({ createdAt: "desc" })
         res.json({
-            code:200,
+            code: 200,
             data: notification
         })
-    }else{
+    } else {
         res.json({
-            code:403,
+            code: 403,
             message: "Token Found"
         })
     }
@@ -32,19 +32,19 @@ module.exports.getNotification = async (req, res) => {
 module.exports.readNotification = async (req, res) => {
     const authHeader = req.header('Authorization');
     const token = authHeader && authHeader.split(' ')[1];
-    if(token){
+    if (token) {
         const user = await User.findOne({
             token: token,
         })
         await Notification.updateMany({
-            userId:user._id
-        }, {isRead: true})
+            userId: user._id
+        }, { isRead: true })
         res.json({
-            code:200,
+            code: 200,
         })
-    }else{
+    } else {
         res.json({
-            code:403,
+            code: 403,
             message: "Token Found"
         })
     }
@@ -52,13 +52,13 @@ module.exports.readNotification = async (req, res) => {
 
 // [DELETE] api/v1/notification/delete-notification
 module.exports.deleteNotification = async (req, res) => {
-    const {idNotification} = req.query;
+    const { idNotification } = req.query;
     await Notification.deleteOne({
-        _id:idNotification
+        _id: idNotification
     })
     res.json({
-        code:200,
-        message:"Deleted Notification Successfully",
+        code: 200,
+        message: "Deleted Notification Successfully",
     })
 }
 
