@@ -24,3 +24,4 @@ exports.allChatais = async (req, res) => {
         res.status(500).json({ message: 'Error processing your request', error: error.message });
     }
 };
+
