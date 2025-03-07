@@ -17,11 +17,11 @@ const AdsDetails: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showAdDetails, setShowAdDetails] = useState<boolean>(true);
 
-  
+
   const shuffleArray = (array: Ad[]) => {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1)); 
-      [array[i], array[j]] = [array[j], array[i]]; 
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
   };
@@ -51,9 +51,6 @@ const AdsDetails: React.FC = () => {
 
   const handleCloseAd = () => {
     setShowAdDetails(false);
-    setTimeout(() => {
-      setShowAdDetails(true);
-    }, 5000);
   };
 
   if (loading) {
@@ -77,7 +74,13 @@ const AdsDetails: React.FC = () => {
       {ads.length === 0 ? (
         <div>No ads</div>
       ) : (
-        <Carousel autoplay>
+        <Carousel
+          autoplay
+          dots={false}
+          effect="fade"
+          autoplaySpeed={5000}
+          style={{ height: '100%' }}
+        >
           {ads.map((ad) => (
             <div key={ad._id} className="ad-item">
               <a href={ad.link} target="_blank" rel="noopener noreferrer">
