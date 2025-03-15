@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// Define the Question model
+// Define the Question 
 const quizSchema = new mongoose.Schema({
     title: {
         type: String,
