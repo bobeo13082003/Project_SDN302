@@ -122,5 +122,7 @@
   "AddtoExcel": "Thêm với file Excel",
   "SaveExcel": "Bạn có thể thêm câu hỏi từ tệp Excel",
   "ExcelFile": "File Excel",
-  "ExcelFileForm": "Hãy đảm bảo rằng mẫu tệp Excel giống như hình minh họa."
+  "ExcelFileForm": "Hãy đảm bảo rằng mẫu tệp Excel giống như hình minh họa.",
+  "ExportExcel": "Xuat Excel",
+  "ExportXML": "Xuat XML"
 }

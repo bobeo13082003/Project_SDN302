@@ -330,15 +330,15 @@ const handleExportXml = async () => {
                 onClick={handleExport}
                 style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
               >
-                {t("Export")}
+                {t("ExportExcel")}
               </Button>
               <Button
               type="primary"
               icon={<DownloadOutlined/>}
               onClick={handleExportXml}
-              style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
+              style={{ backgroundColor: "#1890ff", borderColor: "#1890ff", marginLeft: "10px" }}
               >
-                 Export XML
+                 {t("ExportXML")}
               </Button>
             </Col>
           </Row>

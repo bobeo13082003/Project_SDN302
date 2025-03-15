@@ -122,6 +122,7 @@
   "AddtoExcel":"AddtoExcel",
   "SaveExcel":"You can add the with Excel file question.",
   "ExcelFile":"File Excel",
-  "ExcelFileForm": "Make sure the Excel file template is as shown in the image."
-
+  "ExcelFileForm": "Make sure the Excel file template is as shown in the image.",
+"ExportExcel": "Export Excel",
+"ExportXML": "Export XML"
 }
