@@ -131,3 +131,7 @@ export const getAllAds = async () => {
     throw error;
   }
 };
+
+export const deleteQuizLibrary = (quizId: string) => {
+  return axios.delete(`/labrary/delete-labrary/${quizId}`)
+}
