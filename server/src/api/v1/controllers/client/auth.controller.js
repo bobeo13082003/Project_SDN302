@@ -33,7 +33,7 @@ module.exports.register = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error);
+        res.json(error)
     }
 }
 
@@ -64,14 +64,14 @@ module.exports.login = async (req, res) => {
                 res.json({
                     code: 200,
                     token: user.token,
-                    id:user.id,
+                    id: user.id,
                     message: "Login Successful."
                 })
             }
         }
 
     } catch (error) {
-        console.log(error);
+        res.json(error)
     }
 }
 // [POST] api/v1/auth/forgot-password
@@ -105,7 +105,7 @@ module.exports.forgot = async (req, res) => {
                         <h3>${otp}<h3/>This OTP is valid for the next 3 minutes. For security reasons, do not share this OTP with anyone.If you did not request this, please ignore this email or contact our support team immediately.`
         sendMailHelper.sendEmail(email, subject, html);
     } catch (error) {
-        console.log(error);
+        res.json(error)
     }
 }
 // [POST] api/v1/auth/otp
@@ -140,7 +140,7 @@ module.exports.otp = async (req, res) => {
             code: 200
         })
     } catch (error) {
-        console.log(error);
+        res.json(error)
     }
 }
 
@@ -169,7 +169,7 @@ module.exports.reset = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
+        res.json(error)
     }
 }
 // api/v1/auth/user-profile
@@ -177,24 +177,24 @@ module.exports.profile = async (req, res) => {
     try {
         const authHeader = req.header('Authorization');
         const token = authHeader && authHeader.split(' ')[1];
-        if(token){
+        if (token) {
             const user = await Users.findOne({
-                token:token
+                token: token
             }).select('email userName')
-            if(user){
+            if (user) {
                 res.json({
-                    code:200,
-                    user:user
+                    code: 200,
+                    user: user
                 })
             }
-        }else{
+        } else {
             res.json({
-                code:403,
+                code: 403,
                 message: "Token Found"
             })
         }
-    }catch (error){
-        console.log(error)
+    } catch (error) {
+        res.json(error)
     }
 }
 // api/v1/auth/edit-profile
@@ -203,17 +203,17 @@ module.exports.editProfile = async (req, res) => {
         const authHeader = req.header('Authorization');
         const token = authHeader && authHeader.split(' ')[1];
         const userName = req.body.userName;
-        if(token){
+        if (token) {
             const user = await Users.updateOne({
-                token:token
-            }, {userName:userName})
-           res.json({
-               code:200,
-               message:"Update Successfull."
-           })
+                token: token
+            }, { userName: userName })
+            res.json({
+                code: 200,
+                message: "Update Successfull."
+            })
         }
-    }catch (error){
-        console.log(error)
+    } catch (error) {
+        res.json(error)
     }
 }
 

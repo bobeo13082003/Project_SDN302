@@ -4,8 +4,8 @@ const GeneralSetting = require('../../models/generalSetting')
 module.exports.generalSetting = async (req, res) => {
     const generalSetting = await GeneralSetting.findOne({});
     res.json({
-        code:200,
-        data:generalSetting
+        code: 200,
+        data: generalSetting
     })
 }
 
@@ -13,17 +13,17 @@ module.exports.generalSetting = async (req, res) => {
 module.exports.editGeneralSetting = async (req, res) => {
     try {
         const generalSetting = await GeneralSetting.findOne({})
-        if(generalSetting) {
+        if (generalSetting) {
             await GeneralSetting.updateOne({
-                _id:generalSetting.id,
+                _id: generalSetting.id,
             }, req.body)
-            res.json({code:200,message:"Edited Successfully",});
-        }else{
+            res.json({ code: 200, message: "Edited Successfully", });
+        } else {
             const newGeneralSetting = new GeneralSetting(req.body);
             await newGeneralSetting.save();
-            res.json({code:200,message:"Create Successfully",});
+            res.json({ code: 200, message: "Create Successfully", });
         }
-    }catch(err) {
-        console.log(err)
+    } catch (err) {
+        res.json(err)
     }
 }

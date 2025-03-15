@@ -8,14 +8,16 @@ const uploadCloud = require("../../../../middleware/uploadCloud");
 const authorization = require("../../../../middleware/authorization.middleware");
 
 router.post("/add-ads",
+  authorization.AuthorizationAdmin,
   upload.single("image"),
   uploadCloud.uploadCloud,
   controller.createAds
 );
-router.get("/get-ads", controller.getAllAds);
-router.delete('/deleteAds', controller.deleteAds);
+router.get("/get-ads", authorization.AuthorizationAdmin, controller.getAllAds);
+router.delete('/deleteAds', authorization.AuthorizationAdmin, controller.deleteAds);
 router.patch(
   "/editAds",
+  authorization.AuthorizationAdmin,
   upload.single("image"),
   uploadCloud.uploadCloud,
   controller.updateAds

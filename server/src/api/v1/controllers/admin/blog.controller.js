@@ -8,29 +8,29 @@ const Comment = require('../../models/comment'); // Model Comment
 //[GET] api/v1/blog/allBlog
 module.exports.getAllBlogs = async (req, res) => {
     const blogs = await Blog.find({
-        deleted:false,
-    }).sort({createdAt:'desc'});
+        deleted: false,
+    }).sort({ createdAt: 'desc' });
     res.json({
-        code:200,
-        data:blogs
+        code: 200,
+        data: blogs
     });
 }
 // [POST] api/v1/blog/addBlog
 module.exports.addBlog = async (req, res) => {
     try {
-        const {title} = req.body;
+        const { title } = req.body;
         const slug = slugify(title, {
             lower: true,
             strict: true
         });
-        const blog = new Blog({...req.body, slug});
+        const blog = new Blog({ ...req.body, slug });
         await blog.save()
         res.json({
-            code:200,
+            code: 200,
             message: "Create Blog Successfully",
         });
-    }catch (err){
-        console.log(err)
+    } catch (error) {
+        res.json(error)
     }
 }
 // [DELETE] api/v1/blog/deleteBlog
@@ -69,19 +69,19 @@ module.exports.deleteBlog = async (req, res) => {
 // [PATCH] api/v1/blog/editBlog
 module.exports.updateBlog = async (req, res) => {
     try {
-        const {title} = req.body;
+        const { title } = req.body;
         const slug = slugify(title, {
             lower: true,
             strict: true
         });
-        if(slug){
-            await Blog.updateOne({slug:req.body.slug}, {...req.body, slug:slug});
+        if (slug) {
+            await Blog.updateOne({ slug: req.body.slug }, { ...req.body, slug: slug });
             res.json({
-                code:200,
+                code: 200,
                 message: "Update Blog Successfully",
             });
         }
-    }catch (err){
-        console.log(err)
+    } catch (err) {
+        res.json(error)
     }
 }

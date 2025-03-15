@@ -5,22 +5,22 @@ const saltRounds = 10;
 // [POST] api/v1/auth/admin
 module.exports.register = async (req, res) => {
     try {
-        const {userName, password } = req.body;
+        const { userName, password } = req.body;
         const salt = await bcrypt.genSalt(saltRounds);
         const hasPassword = await bcrypt.hash(password, salt);
 
-            const admin = new Admin({
-                userName,
-                password: hasPassword
-            });
-            await admin.save();
-            res.json({
-                code: 200,
-                message: "Account registration successful."
-            })
+        const admin = new Admin({
+            userName,
+            password: hasPassword
+        });
+        await admin.save();
+        res.json({
+            code: 200,
+            message: "Account registration successful."
+        })
 
     } catch (error) {
-        console.log(error);
+        res.json(error);
     }
 }
 
@@ -50,12 +50,12 @@ module.exports.login = async (req, res) => {
                 res.json({
                     code: 200,
                     token: admin.token,
-                    role:admin.role,
+                    role: admin.role,
                     message: "Login Successful."
                 })
             }
         }
     } catch (error) {
-        console.log(error);
+        res.json(error)
     }
 }

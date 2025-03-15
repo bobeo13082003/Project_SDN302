@@ -34,7 +34,6 @@ module.exports.updateStatus = async (req, res) => {
             user: updatedUser,
         });
     } catch (error) {
-        console.error(error);
         res.status(500).json({
             code: 500,
             message: "An error occurred while updating user status.",
