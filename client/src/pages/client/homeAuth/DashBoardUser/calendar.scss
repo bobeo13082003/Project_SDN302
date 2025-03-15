@@ -1,0 +1,83 @@
+.my-calendar-container {
+  display: flex;
+  gap: 20px; /* Adjusted for better spacing */
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 20px;
+
+  .calendar {
+    flex: 1;
+    max-width: 400px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #6c5ce7;
+    }
+
+    .react-calendar {
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .selected {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0984e3;
+      text-align: center;
+      background-color: #dfe6e9;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+  }
+
+  .chart {
+    flex: 1;
+    max-width: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+
+    /* Move chart upwards */
+    align-self: flex-start;
+    margin-top: -20px;
+  }
+
+  .pie-chart {
+    flex: 1;
+    max-width: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: -10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-calendar-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chart, .pie-chart, .calendar {
+    width: 100%;
+  }
+}

@@ -1,0 +1,38 @@
+.not-found-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f6f9;
+    padding: 16px;
+  }
+  
+  .ant-result {
+    background: #fff;
+    border-radius: 8px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .ant-result .ant-btn-primary {
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+  
+  .ant-result-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #ff4d4f;
+  }
+  
+  .ant-result-subtitle {
+    font-size: 18px;
+    color: #8c8c8c;
+  }
+  
+  .ant-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+  }
+  

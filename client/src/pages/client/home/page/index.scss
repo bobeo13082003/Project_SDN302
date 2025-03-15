@@ -1,0 +1,58 @@
+// styles.scss
+
+$primary-color: #1890ff; 
+$primary-hover-color: #0d5da8;
+$secondary-color: #f0f0f0;
+$secondary-hover-color: #686262;
+
+
+.home-content-last {
+  background-color: #dbdfff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  padding: 20px; 
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+}
+
+.button {
+  padding: 16px 32px;
+  font-size: 16px;
+  border-radius: 10px;
+  height: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  cursor: pointer; 
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto;
+
+  &--primary {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: $primary-hover-color;
+    }
+  }
+
+  &--secondary {
+    background-color: $secondary-color;
+    color: blue;
+
+    &:hover {
+      background-color: $secondary-hover-color;
+    }
+  }
+}

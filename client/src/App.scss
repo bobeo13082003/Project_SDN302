@@ -1,0 +1,30 @@
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+
+    .app-content {
+        flex: 1;
+        height: 100%;
+
+        .app-body {
+            height: 100%;
+        }
+
+        .inner-body {
+            height: 100%;
+            margin-top: 4%;
+        }
+    }
+
+    .header-container {
+        position: absolute;
+        top: 0;
+        z-index: 999;
+    }
+
+    .app-footer {
+        z-index: 999;
+    }
+}

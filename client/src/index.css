@@ -1,0 +1,8 @@
+:root {
+  font-family: 'Roboto', sans-serif;
+}
+
+.dark-mode {
+  background-color: #0B0B2B !important;
+  color: #ffffff;
+}

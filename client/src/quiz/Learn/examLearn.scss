@@ -1,0 +1,60 @@
+.Learn-Question{
+.card {
+  min-height: 586px;
+  width: 776px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-weight: lighter; 
+  display: flex; 
+ 
+  flex-direction: column; 
+  justify-content: center; 
+  padding: 20px; 
+}
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center; 
+  
+}
+
+.option-item {
+  min-height: 55px;  
+  flex: 1 1 calc(45% - 10px); 
+  padding: 10px 10px;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  
+  transition: background-color 0.3s ease;
+  overflow:auto;
+}
+
+.option-item:hover {
+  border: 2px solid gray; 
+  border-radius: 5px; 
+}
+
+.selected-option {
+  background-color: #bae7ff;
+  border-color: #91d5ff;
+}
+.option-item.correct-answer {
+  border: 1px dashed green; /* Viền nét đứt màu xanh cho đáp án đúng */
+  color: green;
+}
+
+.option-item.incorrect-answer {
+  border: 1px solid red; /* Viền liền màu đỏ cho đáp án sai */
+  color: red;
+}
+
+.option-item.selected-correct-answer {
+  border: 1px solid green; /* Viền liền màu xanh nếu người dùng chọn đúng */
+  color: green;
+}
+}
