@@ -40,7 +40,7 @@ import { RootState } from "../store/store";
 import { addLibrary } from "../services/client/ApiServies";
 import { toast } from "react-toastify";
 import AdsDetails from "../pages/admin/ads/AdsDetails";
-
+import { getXmlQuestion } from "../services/client/ApiQuiz";
 
 
 const { Paragraph, Text } = Typography;
@@ -147,7 +147,23 @@ const QuestionDetail: React.FC<QuestionsByQuizIdProps> = () => {
       setError("Failed to export questions to Excel.");
     }
   };
-
+const handleExportXml = async () => {
+  try {
+    const response = await getXmlQuestion(quizId);
+    const url = window.URL.createObjectURL(
+      new Blob([response.data], { type: response.headers["content-type"] })
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "quiz_questions.xml"); // Specify the file name
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error(error);
+    setError("Failed to export questions to XML.");
+  }
+}
   const handleAddLibrary = async () => {
     try {
       const res = await addLibrary(userId, quizId);
@@ -315,6 +331,14 @@ const QuestionDetail: React.FC<QuestionsByQuizIdProps> = () => {
                 style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
               >
                 {t("Export")}
+              </Button>
+              <Button
+              type="primary"
+              icon={<DownloadOutlined/>}
+              onClick={handleExportXml}
+              style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
+              >
+                 Export XML
               </Button>
             </Col>
           </Row>

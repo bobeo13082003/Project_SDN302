@@ -590,3 +590,93 @@ module.exports.exportQuestionsToExcel = async (req, res) => {
         res.status(500).json({ message: 'Error exporting quiz questions to Excel' });
     }
 };
+const xml2js = require('xml2js');
+
+module.exports.exportQuestionsToXML = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const quiz = await Quiz.findById(id).populate('questions');
+
+        if (!quiz) {
+            return res.status(404).json({ message: 'Quiz not found' });
+        }
+
+        // Chuyển đổi dữ liệu câu hỏi thành JSON
+        const data = {
+            quiz: {
+                title: quiz.title,
+                description: quiz.description,
+                questions: {
+                    question: quiz.questions.map(q => ({
+                        questionText: q.questionText,
+                        answerA: q.answerA,
+                        answerB: q.answerB,
+                        answerC: q.answerC,
+                        answerD: q.answerD,
+                        correctAnswer: q.correctAnswer,
+                        type: q.type
+                    }))
+                }
+            }
+        };
+
+        // Chuyển đổi sang XML
+        const builder = new xml2js.Builder();
+        const xml = builder.buildObject(data);
+
+        // Thiết lập header và gửi file XML về client
+        res.setHeader('Content-Type', 'application/xml');
+        res.setHeader('Content-Disposition', 'attachment; filename="quiz_questions.xml"');
+        res.send(xml);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error exporting quiz questions to XML' });
+    }
+};
+
+
+
+const storage = multer.memoryStorage();
+
+
+module.exports.importQuestionsFromXML = async (req, res) => {
+    try {
+        console.log(`File name: ${req.file}`);
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+
+        const xmlString = req.file.buffer.toString('utf-8');
+        const parser = new xml2js.Parser();
+
+        parser.parseString(xmlString, async (err, result) => {
+            if (err) {
+                return res.status(400).json({ message: 'Error parsing XML' });
+            }
+
+            const { quiz } = result;
+            if (!quiz || !quiz.questions || !quiz.questions.question) {
+                return res.status(400).json({ message: 'Invalid XML format' });
+            }
+
+            const newQuestions = quiz.questions.question.map(q => ({
+                quizId: req.body.quizId, // ID của quiz sẽ được truyền từ body
+                questionText: q.questionText[0],
+                answerA: q.answerA[0],
+                answerB: q.answerB[0],
+                answerC: q.answerC[0],
+                answerD: q.answerD[0],
+                correctAnswer: q.correctAnswer[0],
+                type: q.type[0]
+            }));
+
+            // Lưu danh sách câu hỏi vào MongoDB
+            await Question.insertMany(newQuestions);
+
+            res.status(200).json({ message: 'Questions imported successfully' });
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error importing quiz questions from XML' });
+    }
+};

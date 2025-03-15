@@ -14,14 +14,16 @@ routes.get('/getQuiz', controller.getQuiz);
 routes.put('/countTraffic/:id', authorization.Authorization, controller.countTraffic);
 routes.get('/countQuiz', controller.countQuiz);
 routes.get('/mostRecentQuiz', controller.selectQuizMostTraffic);
+routes.get('/getXmlQuiz/:id', controller.exportQuestionsToXML);
+routes.post('/addXmlQuiz', authorization.Authorization,controller.importQuestionsFromXML);
 
 routes.post('/lastesQuiz', authorization.Authorization, lastestQuiz.lastestQuiz)
 routes.get('/mostLatesQuiz', authorization.Authorization, lastestQuiz.listLastQuiz)
 
-
+routes.post('/addQuizFromExcel', authorization.Authorization, controller.addQuizFromExcel);
 routes.get('/search', controller.searchQuiz);
 routes.get('/myQuiz', authorization.Authorization, controller.getUserQuiz);
-routes.post('/addQuizFromExcel', authorization.Authorization, controller.addQuizFromExcel);
+
 routes.get('/exportQuizToExcel/:id', controller.exportQuestionsToExcel);
 
 

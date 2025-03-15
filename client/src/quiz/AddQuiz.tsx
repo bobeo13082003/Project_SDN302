@@ -11,7 +11,7 @@ import DefineBtn from "../components/DefineBtn";
 import MultiChoice from "../components/MultiChoice";
 import TrueFlase from "../components/TrueFlase";
 import { FormUploadExcel } from "../components/FormUploadExcel";
-
+import {  FormUploadXML } from "../components/FromUploadXML";
 
 
 interface QuizData {
@@ -26,7 +26,7 @@ const AddQuiz: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<{ [key: number]: string }>({});
   const [form] = Form.useForm();
-  const [selectedForm, setSelectedForm] = useState<"form1" | "form2" | "form3" | "form4" | null>(null);
+  const [selectedForm, setSelectedForm] = useState<"form1" | "form2" | "form3" | "form4"| "form5" | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string[] }>({});
   const { t } = useTranslation("learnquiz");
   useEffect(() => {
@@ -184,6 +184,20 @@ const AddQuiz: React.FC = () => {
         >
           {t("AddFromExcel")}
         </Button>
+        <Button
+          type={selectedForm === "form5" ? "primary" : "default"}
+          onClick={() => {
+            setSelectedForm("form5");
+            form.resetFields();
+            setSelectedAnswers({});
+            setImagePreview({});
+          }}
+          style={{ marginLeft: "10px" }}
+        >
+         Add From XML
+        </Button>
+    
+          
       </div>
 
       {/* Conditional Rendering of the forms */}
@@ -202,6 +216,17 @@ const AddQuiz: React.FC = () => {
           </Col>
         </Row>
       )}
+
+      {selectedForm === "form5" && (
+        <Row justify="center" style={{ marginTop: "50px" }}>
+          <Col span={12}>
+            <FormUploadXML
+              setIsFormVisible={setIsFormVisible}
+            />
+          </Col>
+        </Row>
+      )}
+
     </div>
   );
 };
