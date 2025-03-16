@@ -32,9 +32,9 @@ const DashBoard = () => {
   const [quizLoading, setQuizLoading] = useState<boolean>(true);
   const [likedBlogCount, setLikedBlogCount] = useState<number | null>(null);
   const [blogLoading, setBlogLoading] = useState<boolean>(true);
-  const [questionCount, setQuestionCount] = useState<number | null>(null); 
-  const [typeNCount, setTypeNCount] = useState<number | null>(null); 
-  const [typeTFCount, setTypeTFCount] = useState<number | null>(null); 
+  const [questionCount, setQuestionCount] = useState<number | null>(null);
+  const [typeNCount, setTypeNCount] = useState<number | null>(null);
+  const [typeTFCount, setTypeTFCount] = useState<number | null>(null);
 
   const currentUserId = useSelector((state: RootState) => state.user.user._id);
 
@@ -42,7 +42,7 @@ const DashBoard = () => {
     const fetchQuizData = async () => {
       setQuizLoading(true);
       try {
-        
+
         const response = await getQuiz();
         const userQuizzes = response.data.filter(
           (quiz: any) => quiz.userId?._id === currentUserId
@@ -58,15 +58,15 @@ const DashBoard = () => {
 
           totalQuestions += questions.length;
 
-          
+
           typeNCount += questions.filter((q: any) => q.type === "N").length;
           typeTFCount += questions.filter((q: any) => q.type === "TF").length;
         }
 
-        setQuizCount(userQuizzes.length); 
-        setQuestionCount(totalQuestions); 
+        setQuizCount(userQuizzes.length);
+        setQuestionCount(totalQuestions);
         setTypeNCount(typeNCount);
-        setTypeTFCount(typeTFCount); 
+        setTypeTFCount(typeTFCount);
       } catch (error) {
         console.error("Failed to fetch quizzes:", error);
         setQuizCount(0);
@@ -128,10 +128,6 @@ const DashBoard = () => {
 
   return (
     <div style={{ padding: "16px" }}>
-      <div>
-        <AdsDetails />
-      </div>
-
       <div className="row justify-content-center g-4">
         {cardData.map((card, index) => (
           <div key={index} className="col-12 col-md-6 col-lg-3">

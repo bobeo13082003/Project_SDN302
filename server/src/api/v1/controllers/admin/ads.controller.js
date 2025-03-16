@@ -30,7 +30,7 @@ module.exports.deleteAds = async (req, res) => {
 };
 
 module.exports.updateAds = async (req, res) => {
-  const {id} = req.body
+  const { id } = req.body
   try {
     if (!id) {
       return res.status(400).json({ code: 400, message: "Ad ID is required" });
@@ -38,7 +38,6 @@ module.exports.updateAds = async (req, res) => {
     await Ads.updateOne({ _id: id }, req.body);
     res.json({ code: 200, message: "Update Ads Successfully" });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ code: 500, message: "An error occurred" });
   }
 };

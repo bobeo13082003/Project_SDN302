@@ -115,7 +115,7 @@ const QuestionDetail: React.FC<QuestionsByQuizIdProps> = () => {
   const fetchQuestions = async () => {
     setLoading(true);
     try {
-      const response = await GetQuestion(quizId);
+      const response = await GetQuestion(quizId as string);
       const fetchedQuestions = response.data;
       setQuestions(fetchedQuestions);
 
@@ -132,7 +132,7 @@ const QuestionDetail: React.FC<QuestionsByQuizIdProps> = () => {
   };
   const handleExport = async () => {
     try {
-      const response = await exportFromExcel(quizId);
+      const response = await exportFromExcel(quizId as string);
       const url = window.URL.createObjectURL(
         new Blob([response.data], { type: response.headers["content-type"] })
       );
@@ -147,26 +147,26 @@ const QuestionDetail: React.FC<QuestionsByQuizIdProps> = () => {
       setError("Failed to export questions to Excel.");
     }
   };
-const handleExportXml = async () => {
-  try {
-    const response = await getXmlQuestion(quizId);
-    const url = window.URL.createObjectURL(
-      new Blob([response.data], { type: response.headers["content-type"] })
-    );
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "quiz_questions.xml"); // Specify the file name
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  } catch (error) {
-    console.error(error);
-    setError("Failed to export questions to XML.");
+  const handleExportXml = async () => {
+    try {
+      const response = await getXmlQuestion(quizId as string);
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: response.headers["content-type"] })
+      );
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "quiz_questions.xml"); // Specify the file name
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error(error);
+      setError("Failed to export questions to XML.");
+    }
   }
-}
   const handleAddLibrary = async () => {
     try {
-      const res = await addLibrary(userId, quizId);
+      const res = await addLibrary(userId, quizId as string);
       if (res.data && res.data.code === 200) {
         toast.success(res.data.message);
       }
@@ -230,9 +230,9 @@ const handleExportXml = async () => {
             action={<Button onClick={onBack}>{t("BackToQuizList")}</Button>}
           />
         ) : (
-          <div style={{ zIndex: 1000, marginTop: 100 }}>
-            <AdsDetails />
-            <div className="center-container">
+          <div className="row" style={{ marginTop: 100 }}>
+
+            <div className="col-9 text-center">
               <div className="button-quiz">
                 <Button
                   icon={<BookOutlined />}
@@ -300,181 +300,186 @@ const handleExportXml = async () => {
                 <FlashCardQuestionDetail questions={questions} />
               </div>
             </div>
-
+            <div className="col-3">
+              <AdsDetails />
+            </div>
           </div>
         )}
-        <div className="center-container">
-          <Row
-            justify="space-between"
-            align="middle"
-            style={{ marginBottom: 16 }}
-          >
-            {/* Back Button */}
-            <Col>
-              <Button
-                type="default"
-                icon={<ArrowLeftOutlined />}
-                onClick={onBack}
-              >
-                {t("BackToQuizList")}
-              </Button>
-            </Col>
+        <div className="text-center row">
+          <div className="col-9">
+            <Row
+              justify="space-between"
+              align="middle"
+              style={{ marginBottom: 16 }}
+            >
+              {/* Back Button */}
+              <Col>
+                <Button
+                  type="default"
+                  icon={<ArrowLeftOutlined />}
+                  onClick={onBack}
+                >
+                  {t("BackToQuizList")}
+                </Button>
+              </Col>
 
-            <Col>
-              <Button className="mx-2" onClick={handleAddLibrary}>
-                <FolderOpenOutlined /> {t("Add Library")}
-              </Button>
-              <Button
-                type="primary"
-                icon={<DownloadOutlined />}
-                onClick={handleExport}
-                style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
-              >
-                {t("ExportExcel")}
-              </Button>
-              <Button
-              type="primary"
-              icon={<DownloadOutlined/>}
-              onClick={handleExportXml}
-              style={{ backgroundColor: "#1890ff", borderColor: "#1890ff", marginLeft: "10px" }}
-              >
-                 {t("ExportXML")}
-              </Button>
-            </Col>
-          </Row>
+              <Col>
+                <Button className="mx-2" onClick={handleAddLibrary}>
+                  <FolderOpenOutlined /> {t("Add Library")}
+                </Button>
+                <Button
+                  type="primary"
+                  icon={<DownloadOutlined />}
+                  onClick={handleExport}
+                  style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
+                >
+                  {t("Export")}
+                </Button>
+                <Button
+                  type="primary"
+                  icon={<DownloadOutlined />}
+                  onClick={handleExportXml}
+                  style={{ backgroundColor: "#1890ff", borderColor: "#1890ff", marginLeft: "10px" }}
+                >
+                  {t("ExportXML")}
+                </Button>
+              </Col>
+            </Row>
+          </div>
         </div>
 
-        <div style={{ padding: "20px" }}>
-          {questions.length === 0 ? (
-            <Paragraph>No questions available for this quiz.</Paragraph>
-          ) : (
-            <List
-              itemLayout="vertical"
-              size="large"
-              dataSource={questions}
-              renderItem={(question) => (
-                <List.Item key={question._id}>
-                  <Card
-                    title={question.questionText}
-                    style={{ marginBottom: "20px" }}
-                    extra={
-                      <Button
-                        icon={<SoundOutlined style={{ fontSize: "20px" }} />}
-                        onClick={() => {
-                          if (currentLanguage === "English") {
-                            if (!token) {
-                              speakText("Please login to listen ");
-                            } else {
-                              speakText(`Question: ${question.questionText}.`);
-                              if (question.answerA !== "")
-                                speakText(`Answer A: ${question.answerA}`);
-                              if (question.answerB !== "")
-                                speakText(`Answer B: ${question.answerB}`);
-                              if (question.answerC !== "")
-                                speakText(`Answer C: ${question.answerC}`);
-                              if (question.answerD !== "")
-                                speakText(`Answer D: ${question.answerD}`);
+        <div className="row" style={{ padding: "20px" }}>
+          <div className="col-9">
+            {questions.length === 0 ? (
+              <Paragraph>No questions available for this quiz.</Paragraph>
+            ) : (
+              <List
+                itemLayout="vertical"
+                size="large"
+                dataSource={questions}
+                renderItem={(question) => (
+                  <List.Item key={question._id}>
+                    <Card
+                      title={question.questionText}
+                      style={{ marginBottom: "20px" }}
+                      extra={
+                        <Button
+                          icon={<SoundOutlined style={{ fontSize: "20px" }} />}
+                          onClick={() => {
+                            if (currentLanguage === "English") {
+                              if (!token) {
+                                speakText("Please login to listen ");
+                              } else {
+                                speakText(`Question: ${question.questionText}.`);
+                                if (question.answerA !== "")
+                                  speakText(`Answer A: ${question.answerA}`);
+                                if (question.answerB !== "")
+                                  speakText(`Answer B: ${question.answerB}`);
+                                if (question.answerC !== "")
+                                  speakText(`Answer C: ${question.answerC}`);
+                                if (question.answerD !== "")
+                                  speakText(`Answer D: ${question.answerD}`);
 
-                              speakText(
-                                `Correct Answer: ${question.correctAnswer}`
-                              );
+                                speakText(
+                                  `Correct Answer: ${question.correctAnswer}`
+                                );
+                              }
+                            } else if (currentLanguage === "Tiếng Việt") {
+                              if (!token) {
+                                speakText("Đăng nhập để nghe ");
+                              } else {
+                                speakText(`Câu hỏi: ${question.questionText}.`);
+                                if (question.answerA !== "")
+                                  speakText(`Đáp án A: ${question.answerA}`);
+                                if (question.answerB !== "")
+                                  speakText(`Đáp án B: ${question.answerB}`);
+                                if (question.answerC !== "")
+                                  speakText(`Đáp án C: ${question.answerC}`);
+                                if (question.answerD !== "")
+                                  speakText(`Đáp án D: ${question.answerD}`);
+
+                                speakText(
+                                  `Đáp án đúng: ${question.correctAnswer}`
+                                );
+                              }
                             }
-                          } else if (currentLanguage === "Tiếng Việt") {
-                            if (!token) {
-                              speakText("Đăng nhập để nghe ");
-                            } else {
-                              speakText(`Câu hỏi: ${question.questionText}.`);
-                              if (question.answerA !== "")
-                                speakText(`Đáp án A: ${question.answerA}`);
-                              if (question.answerB !== "")
-                                speakText(`Đáp án B: ${question.answerB}`);
-                              if (question.answerC !== "")
-                                speakText(`Đáp án C: ${question.answerC}`);
-                              if (question.answerD !== "")
-                                speakText(`Đáp án D: ${question.answerD}`);
+                          }}
+                        ></Button>
+                      }
+                    >
+                      {question.image && (
+                        <img
+                          src={question.image}
+                          alt="Question Image"
+                          style={{ width: "100%", marginBottom: "10px" }}
+                        />
+                      )}
 
-                              speakText(
-                                `Đáp án đúng: ${question.correctAnswer}`
-                              );
-                            }
-                          }
-                        }}
-                      ></Button>
-                    }
-                  >
-                    {question.image && (
-                      <img
-                        src={question.image}
-                        alt="Question Image"
-                        style={{ width: "100%", marginBottom: "10px" }}
-                      />
-                    )}
+                      <Paragraph>
+                        {((question.answerA !== "" && question.type !== "TF") ||
+                          (question.type === "TF" &&
+                            (question.answerA ?? "").trim() === "True")) && (
+                            <>
+                              <Text strong>{t("AnswerA")} </Text> {question.answerA}{" "}
+                            </>
+                          )}
+                      </Paragraph>
+                      <Paragraph>
+                        {((question.answerB !== "" && question.type !== "TF") ||
+                          (question.type === "TF" &&
+                            (question.answerB ?? "").trim() === "False")) && (
+                            <>
+                              <Text strong>{t("AnswerB")}</Text> {question.answerB}{" "}
+                            </>
+                          )}
+                      </Paragraph>
+                      <Paragraph>
+                        {question.answerC !== "" && question.type !== "TF" && (
+                          <>
+                            <Text strong>{t("AnswerC")}</Text> {question.answerC}{" "}
+                          </>
+                        )}
+                      </Paragraph>
+                      <Paragraph>
+                        {question.answerD !== "" && question.type !== "TF" && (
+                          <>
+                            <Text strong>{t("AnswerD")}</Text> {question.answerD}
+                          </>
+                        )}
+                      </Paragraph>
 
-                    <Paragraph>
-                      {((question.answerA !== "" && question.type !== "TF") ||
-                        (question.type === "TF" &&
-                          (question.answerA ?? "").trim() === "True")) && (
-                        <>
-                          <Text strong>{t("AnswerA")} </Text> {question.answerA}{" "}
-                        </>
-                      )}
-                    </Paragraph>
-                    <Paragraph>
-                      {((question.answerB !== "" && question.type !== "TF") ||
-                        (question.type === "TF" &&
-                          (question.answerB ?? "").trim() === "False")) && (
-                        <>
-                          <Text strong>{t("AnswerB")}</Text> {question.answerB}{" "}
-                        </>
-                      )}
-                    </Paragraph>
-                    <Paragraph>
-                      {question.answerC !== "" && question.type !== "TF" && (
-                        <>
-                          <Text strong>{t("AnswerC")}</Text> {question.answerC}{" "}
-                        </>
-                      )}
-                    </Paragraph>
-                    <Paragraph>
-                      {question.answerD !== "" && question.type !== "TF" && (
-                        <>
-                          <Text strong>{t("AnswerD")}</Text> {question.answerD}
-                        </>
-                      )}
-                    </Paragraph>
-
-                    <Paragraph>
-                      {question.answerA === "" && question.type !== "TF" && (
-                        <Text strong>{t("Define")}:</Text>
-                      )}
-                      {(question.answerA !== "" || question.type === "TF") && (
-                        <Text strong>{t("CorrectAnswer")}</Text>
-                      )}
-                      <div
-                        style={{
-                          filter: token ? "none" : "blur(5px)",
-                          cursor: token ? "default" : "not-allowed",
-                          color: token ? "inherit" : "gray",
-                        }}
-                        title={token ? "" : "Login to view the answer"}
-                      >
-                        {question.correctAnswer.split(`/"'\\`).join(`,`)}
-                      </div>
-                    </Paragraph>
-                    <Paragraph>
-                      <Text strong>{t("AnswerType")}</Text> {question.type}
-                    </Paragraph>
-                  </Card>
-                </List.Item>
-              )}
-            />
-          )}
+                      <Paragraph>
+                        {question.answerA === "" && question.type !== "TF" && (
+                          <Text strong>{t("Define")}:</Text>
+                        )}
+                        {(question.answerA !== "" || question.type === "TF") && (
+                          <Text strong>{t("CorrectAnswer")}</Text>
+                        )}
+                        <div
+                          style={{
+                            filter: token ? "none" : "blur(5px)",
+                            cursor: token ? "default" : "not-allowed",
+                            color: token ? "inherit" : "gray",
+                          }}
+                          title={token ? "" : "Login to view the answer"}
+                        >
+                          {question.correctAnswer.split(`/"'\\`).join(`,`)}
+                        </div>
+                      </Paragraph>
+                      <Paragraph>
+                        <Text strong>{t("AnswerType")}</Text> {question.type}
+                      </Paragraph>
+                    </Card>
+                  </List.Item>
+                )}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };
 
 export default QuestionDetail;
 
-1;

@@ -70,7 +70,9 @@ const UserLibrary = () => {
 
             <div>
                 {library && library.quizId.length > 0 ? (
-                    <CardLibrary library={library} />
+                    <>
+                        <CardLibrary getAllLibrary={getAllLibrary} library={library} />
+                    </>
                 ) : (
                     <h5>No Quizzes Added to Library</h5>
                 )}

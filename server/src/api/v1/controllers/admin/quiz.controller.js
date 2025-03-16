@@ -2,27 +2,27 @@ const Admin = require("../../models/account-admin");
 const Quiz = require("../../models/quiz");
 
 // Helper function to validate admin token and role
-const validateAdmin = async (token) => {
-  if (!token) return { error: "Token is missing" };
+// const validateAdmin = async (token) => {
+//   if (!token) return { error: "Token is missing" };
 
-  const admin = await Admin.findOne({ token });
-  if (!admin) return { error: "Admin not found" };
-  if (admin.role !== "admin") return { error: "Permission denied" };
+//   const admin = await Admin.findOne({ token });
+//   if (!admin) return { error: "Admin not found" };
+//   if (admin.role !== "admin") return { error: "Permission denied" };
 
-  return { admin };
-};
+//   return { admin };
+// };
 
 // Get all quizzes, only accessible by admin
 module.exports.allQuiz = async (req, res) => {
   try {
     // Extract and validate admin token
-    const authHeader = req.header("Authorization");
-    const token = authHeader?.split(" ")[1];
-    const { error } = await validateAdmin(token);
+    // const authHeader = req.header("Authorization");
+    // const token = authHeader?.split(" ")[1];
+    // const { error } = await validateAdmin(token);
 
-    if (error) {
-      return res.status(403).json({ message: error });
-    }
+    // if (error) {
+    //   return res.status(403).json({ message: error });
+    // }
 
     // Fetch all quizzes without pagination
     const quizzes = await Quiz.find()
