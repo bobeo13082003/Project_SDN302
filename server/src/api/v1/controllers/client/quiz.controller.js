@@ -397,7 +397,7 @@ module.exports.searchQuiz = async function (req, res) {
             .populate('userId', 'email userName')
             .limit(paginationData.limit)
             .skip(paginationData.skip)
-            .sort({ createdAt: 'desc' });
+            .sort({ traffic: 'desc' });
 
 
         res.status(200).json({

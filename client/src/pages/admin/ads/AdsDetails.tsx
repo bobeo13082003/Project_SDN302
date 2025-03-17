@@ -17,11 +17,11 @@ const AdsDetails: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showAdDetails, setShowAdDetails] = useState<boolean>(true);
 
-  
+
   const shuffleArray = (array: Ad[]) => {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1)); 
-      [array[i], array[j]] = [array[j], array[i]]; 
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
   };
@@ -40,7 +40,7 @@ const AdsDetails: React.FC = () => {
           );
         }
       } catch (error) {
-        setError("Không thể tải quảng cáo, vui lòng thử lại");
+        setError("Không thể tải quảng cáo, vui lòng thử lại: " + error);
       } finally {
         setLoading(false);
       }
