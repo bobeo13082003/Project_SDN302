@@ -460,6 +460,7 @@ const QuestionDetail: React.FC<QuestionsByQuizIdProps> = () => {
                             filter: token ? "none" : "blur(5px)",
                             cursor: token ? "default" : "not-allowed",
                             color: token ? "inherit" : "gray",
+                            userSelect: token ? "text" : "none", 
                           }}
                           title={token ? "" : "Login to view the answer"}
                         >

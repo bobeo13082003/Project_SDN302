@@ -12,7 +12,7 @@ module.exports.getNotification = async (req, res) => {
             token: token,
         })
         const notification = await Notification.find({
-            userId:user._id,
+            userId: user._id,
         }).sort({createdAt:"desc"})
         res.json({
             code:200,

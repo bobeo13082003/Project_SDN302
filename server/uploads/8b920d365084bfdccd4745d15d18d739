@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<quiz>
+  <title>Thử Term/Define (JPD113)</title>
+  <description/>
+  <questions>
+    <question>
+      <questionText>わたし</questionText>
+      <answerA/>
+      <answerB/>
+      <answerC/>
+      <answerD/>
+      <correctAnswer>Tôi</correctAnswer>
+      <type>N</type>
+    </question>
+    <question>
+      <questionText>べとなむじん</questionText>
+      <answerA/>
+      <answerB/>
+      <answerC/>
+      <answerD/>
+      <correctAnswer>Người Việt Nam</correctAnswer>
+      <type>N</type>
+    </question>
+    <question>
+      <questionText>がく</questionText>
+      <answerA/>
+      <answerB/>
+      <answerC/>
+      <answerD/>
+      <correctAnswer>học</correctAnswer>
+      <type>N</type>
+    </question>
+    <question>
+      <questionText>せい</questionText>
+      <answerA/>
+      <answerB/>
+      <answerC/>
+      <answerD/>
+      <correctAnswer>Sinh</correctAnswer>
+      <type>N</type>
+    </question>
+    <question>
+      <questionText>三人:3 người</questionText>
+      <answerA/>
+      <answerB/>
+      <answerC/>
+      <answerD/>
+      <correctAnswer>True</correctAnswer>
+      <type>TF</type>
+    </question>
+    <question>
+      <questionText>三人:2 người</questionText>
+      <answerA/>
+      <answerB/>
+      <answerC/>
+      <answerD/>
+      <correctAnswer>False</correctAnswer>
+      <type>TF</type>
+    </question>
+  </questions>
+</quiz>

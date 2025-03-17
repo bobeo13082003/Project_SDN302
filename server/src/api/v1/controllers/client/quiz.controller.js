@@ -200,13 +200,13 @@ module.exports.updateQuiz = async (req, res) => {
                         existingQuestion.image = questionData.image || existingQuestion.image;
                         existingQuestion.answerA = questionData.answerA || existingQuestion.answerA;
                         existingQuestion.answerB = questionData.answerB || existingQuestion.answerB;
-                        existingQuestion.answerC = questionData.answerC !== undefined && questionData.answerC !== null 
-                        ? questionData.answerC 
-                        : existingQuestion.answerC;
-                    
-                    existingQuestion.answerD = questionData.answerD !== undefined && questionData.answerD !== null 
-                        ? questionData.answerD 
-                        : existingQuestion.answerD;
+                        existingQuestion.answerC = questionData.answerC !== undefined && questionData.answerC !== null
+                            ? questionData.answerC
+                            : existingQuestion.answerC;
+
+                        existingQuestion.answerD = questionData.answerD !== undefined && questionData.answerD !== null
+                            ? questionData.answerD
+                            : existingQuestion.answerD;
                         existingQuestion.correctAnswer = questionData.correctAnswer || existingQuestion.correctAnswer;
                         existingQuestion.type = questionData.type || existingQuestion.type;
                         await existingQuestion.save();
@@ -426,10 +426,10 @@ module.exports.getUserQuiz = async (req, res) => {
                 return res.status(404).json({ message: 'User not found' });
             }
             userId = user._id;
-            
+
         }
         const totalQuizzes = await Quiz.countDocuments({ userId: userId });
-        
+
         const paginationData = paginatinHelper(
             {
                 currentPage: 1,
@@ -635,48 +635,85 @@ module.exports.exportQuestionsToXML = async (req, res) => {
 };
 
 
-
 const storage = multer.memoryStorage();
+const upload2 = multer({ storage });
+module.exports.addQuizFromXML = [
+    upload2.single('file'),
+    async (req, res) => {
+        try {
+            // Lấy token từ header Authorization
+            const authHeader = req.header('Authorization');
+            const token = authHeader && authHeader.split(' ')[1];
+            let userId;
 
-
-module.exports.importQuestionsFromXML = async (req, res) => {
-    try {
-        console.log(`File name: ${req.file}`);
-        if (!req.file) {
-            return res.status(400).json({ message: 'No file uploaded' });
-        }
-
-        const xmlString = req.file.buffer.toString('utf-8');
-        const parser = new xml2js.Parser();
-
-        parser.parseString(xmlString, async (err, result) => {
-            if (err) {
-                return res.status(400).json({ message: 'Error parsing XML' });
+            // Kiểm tra token và xác thực người dùng
+            if (token) {
+                const user = await User.findOne({ token: token });
+                if (!user) {
+                    return res.status(404).json({ message: 'User not found' });
+                }
+                userId = user._id;
+            } else {
+                return res.status(401).json({ message: 'Authorization token missing' });
             }
 
-            const { quiz } = result;
-            if (!quiz || !quiz.questions || !quiz.questions.question) {
+            // Kiểm tra nếu không có file
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded' });
+            }
+
+            // Kiểm tra nếu không có title và description trong body
+            const { title, description } = req.body;
+            if (!title || !description) {
+                return res.status(400).json({ message: 'Title and description are required' }); 
+            }
+
+            const xmlString = req.file.buffer ? req.file.buffer.toString('utf-8') : '';
+
+            if (!xmlString) {
+                return res.status(400).json({ message: 'Uploaded file is empty' });
+            }
+            
+            const parser = new xml2js.Parser();
+
+            // Parse XML sang JSON
+            const result = await parser.parseStringPromise(xmlString);
+
+            // Kiểm tra format XML hợp lệ không
+            const quiz = result?.quiz;
+            if (!quiz || !quiz.questions || !quiz.questions[0]?.question) {
                 return res.status(400).json({ message: 'Invalid XML format' });
             }
 
-            const newQuestions = quiz.questions.question.map(q => ({
-                quizId: req.body.quizId, // ID của quiz sẽ được truyền từ body
-                questionText: q.questionText[0],
-                answerA: q.answerA[0],
-                answerB: q.answerB[0],
-                answerC: q.answerC[0],
-                answerD: q.answerD[0],
-                correctAnswer: q.correctAnswer[0],
-                type: q.type[0]
+            // Tạo một quiz mới
+            const newQuiz = new Quiz({ title, description, userId });
+            const savedQuiz = await newQuiz.save();
+
+            // Duyệt qua câu hỏi trong XML và lưu vào MongoDB
+            const questions = quiz.questions[0].question.map(q => ({
+                quizId: savedQuiz._id,
+                questionText: q.questionText?.[0] || '',
+                image: q.image?.[0] || null, // Nếu có ảnh
+                answerA: q.answerA?.[0] || '',
+                answerB: q.answerB?.[0] || '',
+                answerC: q.answerC?.[0] || '',
+                answerD: q.answerD?.[0] || '',
+                correctAnswer: q.correctAnswer?.[0] || 'No Answer',
+                type: q.type?.[0] || 'multiple-choice'
             }));
 
             // Lưu danh sách câu hỏi vào MongoDB
-            await Question.insertMany(newQuestions);
+            const savedQuestions = await Question.insertMany(questions);
 
-            res.status(200).json({ message: 'Questions imported successfully' });
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error importing quiz questions from XML' });
+            // Cập nhật danh sách câu hỏi vào quiz
+            savedQuiz.questions = savedQuestions.map(q => q._id);
+            await savedQuiz.save();
+
+            res.status(201).json({ message: 'Quiz created successfully from XML', quiz: savedQuiz });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error creating quiz from XML' });
+        }
     }
-};
+];

@@ -90,10 +90,6 @@ export const addFromExcel = (data: FormData) => {
 export const getXmlQuestion = (quizID: string) => {
     return axios.get(`/quiz/getXmlQuiz/${quizID}`);
 }
-export const addXmlQuestion =  (data: FormData) => {
-    return fetch("http://localhost:3000/api/v1/quiz/addXmlQuiz", {
-        method: "POST",
-        body: data,
-      }).then(response => response.json());
+export const addXmlQuestion = (data: FormData) => {
+    return axios.post("/quiz/addXmlQuiz", data);
 };
-
